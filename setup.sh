@@ -1,24 +1,18 @@
 #!/bin/bash
 
-# Setup script for ADB and Scrcpy
-# Run: chmod +x setup.sh && ./setup.sh
+# Update package list
+sudo apt-get update
 
-echo "Installing ADB and Scrcpy..."
+# Install ADB
+sudo apt-get install -y android-tools-adb
 
-# Install ADB (platform dependent)
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    sudo apt update
-    sudo apt install android-tools-adb android-tools-fastboot -y
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install android-platform-tools
-else
-    echo "Windows: Download from https://developer.android.com/studio/releases/platform-tools"
-fi
+# Install scrcpy
+sudo apt-get install -y scrcpy
 
-# Install Scrcpy
-wget https://github.com/Genymobile/scrcpy/releases/download/v2.0/scrcpy-server-v2.0
-# Extract and setup (simplified; adjust path)
-mkdir -p ~/scrcpy
-# Full install: curl -s https://install.scrcpy.org | bash
+# Install Python dependencies
+pip install -r requirements.txt
 
-echo "Setup complete. Connect device via USB/WiFi and run 'adb devices' to verify."
+# Grant USB permissions
+sudo usermod -aG plugdev $USER
+
+echo "Setup completed! Please reconnect your phone via USB."
