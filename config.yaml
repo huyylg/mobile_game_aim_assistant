@@ -1,0 +1,51 @@
+# Configuration for MobileGameAimAssistant
+general:
+  log_level: INFO
+  cuda_enabled: true
+  max_fps: 120
+  resolution: [800, 600]
+
+capture:
+  adb_host: "localhost:5555"  # WiFi: adb connect <ip>:5555
+  buffer_size: 2
+  reconnect_delay: 5
+
+ai:
+  model_path: "models/pubg_mobile.pt"  # Change per game
+  confidence_threshold: 0.8
+  classes: ["enemy", "teammate", "head", "body"]
+  batch_size: 1  # For real-time
+  nms_threshold: 0.4
+
+aim:
+  sensitivity: 1.0
+  aim_speed: 0.5
+  prediction_enabled: true
+  style: "cautious"  # aggressive/cautious
+  fov: 90
+
+input:
+  injection_method: "adb"
+  delay_randomization: [0.01, 0.05]
+  rate_limit: 60  # Inputs per minute
+
+games:
+  pubg_mobile:
+    model: "models/pubg_mobile.pt"
+    head_offset: [0, -20]
+    body_offset: [0, 0]
+  cod_mobile:
+    model: "models/cod_mobile.pt"
+    head_offset: [0, -15]
+    body_offset: [0, 0]
+  valorant_mobile:
+    model: "models/valorant_mobile.pt"
+    head_offset: [0, -25]
+    body_offset: [0, 0]
+
+training:
+  dataset_path: "data/"
+  epochs: 100
+  batch_size: 16
+  img_size: 640
+  transfer_from: "coco"
